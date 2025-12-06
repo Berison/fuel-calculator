@@ -1,4 +1,4 @@
-import { Component, EnvironmentInjector, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   IonTabs,
   IonTabBar,
@@ -8,6 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { triangle, ellipse, square } from 'ionicons/icons';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'fc-tabs',
@@ -15,10 +16,10 @@ import { triangle, ellipse, square } from 'ionicons/icons';
   styleUrls: ['home.page.scss'],
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
-export class TabsPage {
-  public environmentInjector = inject(EnvironmentInjector);
-
+export class TabsPage implements OnInit {
   constructor() {
     addIcons({ triangle, ellipse, square });
   }
+
+  ngOnInit(): void {}
 }

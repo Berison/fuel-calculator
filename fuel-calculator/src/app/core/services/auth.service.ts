@@ -1,13 +1,13 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, computed, signal } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
   signOut,
-  user,
+  user as firebaseUser$,
   User,
   UserCredential,
 } from '@angular/fire/auth';
-import { Observable, map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -15,26 +15,27 @@ import { Observable, map } from 'rxjs';
 export class AuthService {
   private readonly auth = inject(Auth);
 
-  /** Current user (observable), null if not logged in */
-  readonly user$: Observable<User | null> = user(this.auth);
+  /** Firebase user$ */
+  private readonly firebaseUserSig = toSignal<User | null>(
+    firebaseUser$(this.auth),
+    { initialValue: null }
+  );
 
-  /** Simple flag, whether the user is logged in */
-  readonly isLoggedIn$: Observable<boolean> = this.user$.pipe(map((u) => !!u));
+  /** Current Firebase User */
+  readonly user = computed(() => this.firebaseUserSig());
 
-  /** Current user (sync getter, may be null) */
+  /** User logged in or not */
+  readonly isLoggedIn = computed(() => !!this.firebaseUserSig());
+
+  /** Current User */
   get currentUser(): User | null {
-    return this.auth.currentUser;
+    return this.firebaseUserSig();
   }
 
-  /**
-   * Email login + password
-   * Throws an error if login is unsuccessful
-   */
   login(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  /** Log out of your account */
   logout(): Promise<void> {
     return signOut(this.auth);
   }
