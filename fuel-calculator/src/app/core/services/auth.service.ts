@@ -1,4 +1,4 @@
-import { inject, Injectable, computed, signal } from '@angular/core';
+import { inject, Injectable, computed } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -8,6 +8,7 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { map, startWith } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,14 @@ export class AuthService {
   private readonly firebaseUserSig = toSignal<User | null>(
     firebaseUser$(this.auth),
     { initialValue: null }
+  );
+
+  readonly ready = toSignal(
+    firebaseUser$(this.auth).pipe(
+      map(() => true),
+      startWith(false)
+    ),
+    { initialValue: false }
   );
 
   /** Current Firebase User */

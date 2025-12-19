@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { IonSigninModule } from './ion-modules';
 import { FCHeader } from 'src/app/core/components/header/header.component';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +25,12 @@ export class SigninPage {
 
   get canLogin(): boolean {
     return this.email.trim().length > 0 && this.password.trim().length > 0;
+  }
+
+  constructor() {
+    effect(() => {
+      console.log(this.auth.currentUser);
+    });
   }
 
   togglePasswordVisibility() {
