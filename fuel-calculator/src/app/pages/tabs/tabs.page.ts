@@ -7,7 +7,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { triangle } from 'ionicons/icons';
+import { homeOutline, settingsOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'fc-tabs-bottom',
@@ -16,6 +16,6 @@ import { triangle } from 'ionicons/icons';
 })
 export class TabsPage {
   constructor() {
-    addIcons({ triangle });
+    addIcons({ homeOutline, settingsOutline });
   }
 }
