@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastService } from 'src/app/core/services/ui/toast.service';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular/standalone';
+import { filter, firstValueFrom, take } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'fc-signin',
@@ -15,7 +18,7 @@ import { Router } from '@angular/router';
 export class SigninPage {
   private readonly auth = inject(AuthService);
   private readonly toast = inject(ToastService);
-  private readonly router = inject(Router);
+  private readonly nav = inject(NavController);
 
   passwordVisible = signal(false);
   loading = signal(false);
@@ -25,12 +28,6 @@ export class SigninPage {
 
   get canLogin(): boolean {
     return this.email.trim().length > 0 && this.password.trim().length > 0;
-  }
-
-  constructor() {
-    effect(() => {
-      console.log(this.auth.currentUser);
-    });
   }
 
   togglePasswordVisibility() {
@@ -48,7 +45,7 @@ export class SigninPage {
     try {
       await this.auth.login(this.email, this.password);
       await this.toast.success('Logged in successfully');
-      this.router.navigateByUrl('/home');
+      await this.nav.navigateRoot('/home');
     } catch (err: any) {
       console.error(err);
       await this.toast.error('Login failed, check your credentials');

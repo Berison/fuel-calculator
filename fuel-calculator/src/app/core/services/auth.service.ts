@@ -8,36 +8,37 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, startWith } from 'rxjs';
+import {
+  filter,
+  firstValueFrom,
+  map,
+  shareReplay,
+  startWith,
+  take,
+} from 'rxjs';
+import { NavController } from '@ionic/angular/standalone';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly auth = inject(Auth);
+  private readonly nav = inject(NavController);
 
-  /** Firebase user$ */
-  private readonly firebaseUserSig = toSignal<User | null>(
-    firebaseUser$(this.auth),
-    { initialValue: null }
+  private readonly authState$ = firebaseUser$(this.auth).pipe(
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  readonly ready = toSignal(
-    firebaseUser$(this.auth).pipe(
-      map(() => true),
-      startWith(false)
-    ),
-    { initialValue: false }
+  private readonly firebaseUserSig = toSignal<User | null | undefined>(
+    this.authState$,
+    { initialValue: undefined }
   );
 
-  /** Current Firebase User */
   readonly user = computed(() => this.firebaseUserSig());
-
-  /** User logged in or not */
+  readonly ready = computed(() => this.firebaseUserSig() !== undefined);
   readonly isLoggedIn = computed(() => !!this.firebaseUserSig());
 
-  /** Current User */
-  get currentUser(): User | null {
+  get currentUser(): User | null | undefined {
     return this.firebaseUserSig();
   }
 
@@ -45,7 +46,17 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  logout(): Promise<void> {
-    return signOut(this.auth);
+  async logout(): Promise<void> {
+    try {
+      await signOut(this.auth);
+      await firstValueFrom(
+        this.authState$.pipe(
+          filter((u) => u === null),
+          take(1)
+        )
+      );
+    } finally {
+      await this.nav.navigateRoot('/signin', { replaceUrl: true });
+    }
   }
 }

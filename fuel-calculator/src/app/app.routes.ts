@@ -13,8 +13,10 @@ export const routes: Routes = [
 
   // Private (auth required)
   {
-    path: '',
+    path: 'tabs',
     canMatch: [authGuard],
+    loadComponent: () =>
+      import('./pages/tabs/tabs.page').then((m) => m.TabsPage),
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
@@ -22,8 +24,13 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/home/home.routes').then((m) => m.routes),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('./pages/settings/settings.routes').then((m) => m.routes),
+      },
     ],
   },
 
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'tabs' },
 ];
