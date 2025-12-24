@@ -1,0 +1,30 @@
+{
+  "signin": {
+    "inputs": {
+      "email": {
+        "placeholder": "Email"
+      },
+      "password": {
+        "placeholder": "Password"
+      }
+    },
+    "login-button": {
+      "title": "Login"
+    },
+    "header": {
+      "title": "Fuel calculator"
+    }
+  },
+  "toast": {
+    "errors": {
+      "signin": {
+        "login-failed": "Login failed, check your credentials"
+      }
+    },
+    "success": {
+      "signin": {
+        "login-success": "Logged in successfully"
+      }
+    }
+  }
+}

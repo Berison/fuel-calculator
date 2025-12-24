@@ -1,3 +1,19 @@
 <ion-app>
+  <ion-fab slot="fixed" horizontal="end" vertical="top">
+    <ion-fab-button size="small">
+      <ion-icon name="language-outline" />
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      @for (language of languages; track language) {
+      <ion-fab-button
+        (click)="changeLanguage(language)"
+        [disabled]="fallbackLang == language"
+        [color]="fallbackLang == language ? 'success' : 'light'"
+      >
+        {{ language }}
+      </ion-fab-button>
+      }
+    </ion-fab-list>
+  </ion-fab>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

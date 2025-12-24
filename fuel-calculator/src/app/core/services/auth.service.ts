@@ -8,14 +8,7 @@ import {
   UserCredential,
 } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  filter,
-  firstValueFrom,
-  map,
-  shareReplay,
-  startWith,
-  take,
-} from 'rxjs';
+import { filter, firstValueFrom, shareReplay, take } from 'rxjs';
 import { NavController } from '@ionic/angular/standalone';
 
 @Injectable({
@@ -42,8 +35,17 @@ export class AuthService {
     return this.firebaseUserSig();
   }
 
-  login(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    const cred = await signInWithEmailAndPassword(this.auth, email, password);
+
+    await firstValueFrom(
+      firebaseUser$(this.auth).pipe(
+        filter((u): u is User => !!u),
+        take(1)
+      )
+    );
+
+    return cred;
   }
 
   async logout(): Promise<void> {

@@ -4,7 +4,7 @@
   <div class="auth-wrapper">
     <ion-input
       fill="solid"
-      label="Email"
+      [label]="'signin.inputs.email.placeholder' | translate"
       labelPlacement="stacked"
       type="email"
       placeholder="user@domain.com"
@@ -14,7 +14,7 @@
 
     <ion-input
       fill="solid"
-      label="Password"
+      [label]="'signin.inputs.password.placeholder' | translate"
       labelPlacement="stacked"
       placeholder="******"
       [type]="passwordVisible() ? 'text' : 'password'"
@@ -37,9 +37,11 @@
     <ion-button
       class="ion-margin-top"
       expand="full"
-      [disabled]="!canLogin"
+      [disabled]="!canLogin || loading()"
       (click)="onLogin()"
-      >Login</ion-button
+      >{{'signin.login-button.title' | translate}} @if(loading()) {<ion-spinner
+        name="dots"
+      />}</ion-button
     >
   </div>
 </ion-content>

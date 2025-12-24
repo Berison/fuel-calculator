@@ -1,0 +1,18 @@
+{
+  "signin": {
+    "inputs": {
+      "email": {
+        "placeholder": "Пошта"
+      },
+      "password": {
+        "placeholder": "Пароль"
+      }
+    },
+    "login-button": {
+      "title": "Вхід"
+    },
+    "header": {
+      "title": "Калькулятор палива"
+    }
+  }
+}
