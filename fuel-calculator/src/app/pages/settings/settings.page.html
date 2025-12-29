@@ -1,3 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'pages.settings.header-title' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<fc-translate-button />
 <ion-content class="ion-padding">
-  <ion-button (click)="auth.logout()">Logout</ion-button>
+  <ion-button (click)="auth.logout()"
+    >{{'pages.settings.logout-button' | translate}}</ion-button
+  >
 </ion-content>

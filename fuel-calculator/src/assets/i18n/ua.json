@@ -14,5 +14,34 @@
     "header": {
       "title": "Калькулятор палива"
     }
+  },
+  "pages": {
+    "home": {
+      "header-title": "Домашня сторінка"
+    },
+    "settings": {
+      "header-title": "Налаштування",
+      "logout-button": "Вихід"
+    }
+  },
+  "tabs": {
+    "home": {
+      "title": "Дім"
+    },
+    "settings": {
+      "title": "Налаштування"
+    }
+  },
+  "toast": {
+    "errors": {
+      "signin": {
+        "login-failed": "Не вдалося увійти, перевірте свої облікові дані"
+      }
+    },
+    "success": {
+      "signin": {
+        "login-success": "Вхід успішний"
+      }
+    }
   }
 }

@@ -15,6 +15,23 @@
       "title": "Fuel calculator"
     }
   },
+  "pages": {
+    "home": {
+      "header-title": "Home"
+    },
+    "settings": {
+      "header-title": "Settings",
+      "logout-button": "Logout"
+    }
+  },
+  "tabs": {
+    "home": {
+      "title": "Home"
+    },
+    "settings": {
+      "title": "Settings"
+    }
+  },
   "toast": {
     "errors": {
       "signin": {

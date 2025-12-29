@@ -1,21 +1,10 @@
 import { Component } from '@angular/core';
-import {
-  IonTabs,
-  IonTabBar,
-  IonTabButton,
-  IonIcon,
-  IonLabel,
-} from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { homeOutline, settingsOutline } from 'ionicons/icons';
+import { IonTabsModule } from './ion-modules';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'fc-tabs-bottom',
   templateUrl: 'tabs.page.html',
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  imports: [IonTabsModule, TranslatePipe],
 })
-export class TabsPage {
-  constructor() {
-    addIcons({ homeOutline, settingsOutline });
-  }
-}
+export class TabsPage {}

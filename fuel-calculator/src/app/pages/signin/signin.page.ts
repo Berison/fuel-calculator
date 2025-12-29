@@ -8,22 +8,25 @@ import { NavController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { createGetTranslateByKey$ } from 'src/app/shared/utils';
 import { take } from 'rxjs';
+import { TranslateButtonComponent } from 'src/app/core/components/translate-button/translate-button.component';
 
 @Component({
   selector: 'fc-signin',
   templateUrl: 'signin.page.html',
   styleUrl: 'signin.page.scss',
-  imports: [IonSigninModule, FCHeader, FormsModule, TranslatePipe],
+  imports: [
+    IonSigninModule,
+    FCHeader,
+    FormsModule,
+    TranslatePipe,
+    TranslateButtonComponent,
+  ],
 })
 export class SigninPage {
   private readonly auth = inject(AuthService);
   private readonly toast = inject(ToastService);
   private readonly nav = inject(NavController);
   readonly t$ = createGetTranslateByKey$();
-
-  toastSuccessMessage$ = this.t$('toast.success.signin.login-success').pipe(
-    take(1)
-  );
 
   passwordVisible = signal(false);
   loading = signal(false);
@@ -59,7 +62,9 @@ export class SigninPage {
 
   private async successSignin() {
     await this.auth.login(this.email, this.password);
-    await this.nav.navigateRoot('tabs/home');
-    // this.toastSuccessMessage$.subscribe((res) => this.toast.success(res));
+    await this.nav.navigateRoot('/tabs/home');
+    this.t$('toast.success.signin.login-success')
+      .pipe(take(1))
+      .subscribe((res) => this.toast.success(res));
   }
 }

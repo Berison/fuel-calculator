@@ -1,23 +1,9 @@
 import { NgModule } from '@angular/core';
-import {
-  IonApp,
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  IonIcon,
-  IonRouterOutlet,
-} from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { languageOutline } from 'ionicons/icons';
 
-const MODULES = [
-  IonApp,
-  IonRouterOutlet,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonFabList,
-];
+const MODULES = [IonApp, IonRouterOutlet];
 
 @NgModule({
   imports: MODULES,

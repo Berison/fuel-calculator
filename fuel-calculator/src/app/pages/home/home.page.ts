@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
-
+import { IonHomePageModule } from './ion-modules';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'fc-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonContent],
+  imports: [IonHomePageModule, TranslatePipe],
 })
 export class HomePage implements OnInit {
   ngOnInit(): void {}
