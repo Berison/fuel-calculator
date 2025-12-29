@@ -24,6 +24,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { ThemeService } from './app/core/services/ui/theme.service';
+import { inject, provideAppInitializer } from '@angular/core';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -41,6 +43,9 @@ bootstrapApplication(AppComponent, {
       }),
       fallbackLang: 'en',
       lang: 'en',
+    }),
+    provideAppInitializer(() => {
+      inject(ThemeService).init();
     }),
   ],
 });

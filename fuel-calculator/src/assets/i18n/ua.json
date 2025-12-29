@@ -21,7 +21,12 @@
     },
     "settings": {
       "header-title": "Налаштування",
-      "logout-button": "Вихід"
+      "logout-button": "Вихід",
+      "mode-title": "Темний режим",
+      "user": {
+        "title": "Користувач",
+        "account-created": "Акаунт створено:"
+      }
     }
   },
   "tabs": {

@@ -21,7 +21,12 @@
     },
     "settings": {
       "header-title": "Settings",
-      "logout-button": "Logout"
+      "logout-button": "Logout",
+      "mode-title": "Dark mode",
+      "user": {
+        "title": "User",
+        "account-created": "Account created:"
+      }
     }
   },
   "tabs": {

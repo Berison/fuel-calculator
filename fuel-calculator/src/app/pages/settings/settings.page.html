@@ -5,7 +5,6 @@
 </ion-header>
 <fc-translate-button />
 <ion-content class="ion-padding">
-  <ion-button (click)="auth.logout()"
-    >{{'pages.settings.logout-button' | translate}}</ion-button
-  >
+  @if(auth.currentUser) {<fc-current-user />}
+  <fc-ion-mode-toggle />
 </ion-content>
