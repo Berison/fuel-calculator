@@ -10,7 +10,7 @@ import {
   deleteDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Car } from 'src/app/shared/models/car.interface';
+import { Car, NewCar } from 'src/app/shared/models/car.interface';
 import { ToastService } from '../ui/toast.service';
 
 @Injectable({ providedIn: 'root' })
@@ -37,7 +37,7 @@ export class CarsService {
   }
 
   /** Add a car to the current user */
-  addCar(car: Omit<Car, 'id' | 'createdAt'>) {
+  addCar(car: NewCar) {
     const uid = this.getUid();
     const carsRef = collection(this.firestore, `users/${uid}/cars`);
 

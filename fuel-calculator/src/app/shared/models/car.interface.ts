@@ -6,3 +6,5 @@ export interface Car {
   engineSize: string;
   createdAt?: Date;
 }
+
+export type NewCar = Omit<Car, 'id' | 'createdAt'>;
