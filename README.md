@@ -5,6 +5,7 @@
 - Angular 20 (Zone)
 - Ionic 8
 - Firebase 11.10
+- Ngx-translate
 
 ## Database
 
