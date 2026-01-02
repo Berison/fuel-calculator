@@ -9,8 +9,8 @@ import {
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { CarsService } from 'src/app/core/services/database/cars.service';
-import { AddCarModalComponent } from '../add-car-modal/add-car-modal.component';
-import { Car, NewCar } from 'src/app/shared/models/car.interface';
+import { AddCarModalComponent } from './add-car-modal/add-car-modal.component';
+import { NewCar } from 'src/app/shared/models/car.interface';
 
 @Component({
   selector: 'fc-add-car-fab',
@@ -33,21 +33,17 @@ export class AddCarFabComponent {
     const modal = await this.modalCtrl.create({
       component: AddCarModalComponent,
     });
+
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log(data);
+      this.createCar(data);
     }
   }
 
   createCar(car: NewCar) {
-    // this.carService.addCar({
-    //   name: 'Test car 2',
-    //   year: 2007,
-    //   color: 'Yellow',
-    //   engineSize: '1.8',
-    // });
+    this.carService.addCar(car);
   }
 }

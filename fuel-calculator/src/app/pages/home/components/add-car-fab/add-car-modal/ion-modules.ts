@@ -4,8 +4,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonInput,
-  IonItem,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -15,8 +13,6 @@ const MODULES = [
   IonButtons,
   IonContent,
   IonHeader,
-  IonInput,
-  IonItem,
   IonTitle,
   IonToolbar,
 ];

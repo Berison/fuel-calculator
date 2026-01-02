@@ -17,7 +17,46 @@
   },
   "pages": {
     "home": {
-      "header-title": "Home"
+      "header-title": "Home",
+      "cars": {
+        "no-cars": "No cars yet",
+        "new-car": "New car",
+        "form": {
+          "car-name": {
+            "label": "Enter car name",
+            "placeholder": "Car name"
+          },
+          "year": {
+            "label": "Enter year",
+            "placeholder": "2000"
+          },
+          "color": {
+            "label": "Enter car color",
+            "placeholder": "Black"
+          },
+          "engine-size": {
+            "label": "Enter engine size",
+            "placeholder": "1.6"
+          }
+        },
+        "actions": {
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      },
+      "pages": {
+        "car": {
+          "header-title": "Car name: {{ carName }}",
+          "info": {
+            "title": "Vehicle info",
+            "color": "Color",
+            "createdAt": "When the car was added",
+            "engineSize": "Engine volume",
+            "year": "Year"
+          }
+        }
+      }
     },
     "settings": {
       "header-title": "Settings",
@@ -41,12 +80,14 @@
     "errors": {
       "signin": {
         "login-failed": "Login failed, check your credentials"
-      }
+      },
+      "car-not-found": "Car not found"
     },
     "success": {
       "signin": {
         "login-success": "Logged in successfully"
       }
     }
-  }
+  },
+  "loading": "Loading..."
 }

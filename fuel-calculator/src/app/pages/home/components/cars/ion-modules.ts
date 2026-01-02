@@ -7,7 +7,10 @@ import {
   IonList,
   IonSpinner,
   IonItemOption,
+  IonIcon,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { carOutline } from 'ionicons/icons';
 
 const MODULES = [
   IonItem,
@@ -17,10 +20,15 @@ const MODULES = [
   IonList,
   IonSpinner,
   IonItemOption,
+  IonIcon,
 ];
 
 @NgModule({
   imports: MODULES,
   exports: MODULES,
 })
-export class IonCarsComponentModule {}
+export class IonCarsComponentModule {
+  constructor() {
+    addIcons({ carOutline });
+  }
+}

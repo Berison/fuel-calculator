@@ -17,7 +17,46 @@
   },
   "pages": {
     "home": {
-      "header-title": "Домашня сторінка"
+      "header-title": "Домашня сторінка",
+      "cars": {
+        "no-cars": "Автомобілів ще немає",
+        "new-car": "Нова машина",
+        "form": {
+          "car-name": {
+            "label": "Введіть назву автомобіля",
+            "placeholder": "Назва автомобіля"
+          },
+          "year": {
+            "label": "Введіть рік",
+            "placeholder": "2000"
+          },
+          "color": {
+            "label": "Введіть колір автомобіля",
+            "placeholder": "Чорний"
+          },
+          "engine-size": {
+            "label": "Введіть об'єм двигуна",
+            "placeholder": "1.6"
+          }
+        },
+        "actions": {
+          "delete": "Видалити",
+          "cancel": "Скасувати",
+          "confirm": "Підтвердити"
+        }
+      },
+      "pages": {
+        "car": {
+          "header-title": "Назва машини: {{ carName }}",
+          "info": {
+            "title": "Інформація про машину",
+            "color": "Колір",
+            "createdAt": "Коли була додана машина",
+            "engineSize": "Об'єм двигуна",
+            "year": "Рік"
+          }
+        }
+      }
     },
     "settings": {
       "header-title": "Налаштування",
@@ -41,12 +80,14 @@
     "errors": {
       "signin": {
         "login-failed": "Не вдалося увійти, перевірте свої облікові дані"
-      }
+      },
+      "car-not-found": "Автомобіль не знайдено"
     },
     "success": {
       "signin": {
         "login-success": "Вхід успішний"
       }
     }
-  }
+  },
+  "loading": "Завантаження..."
 }

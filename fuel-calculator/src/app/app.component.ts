@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor() {
     this.translate.addLangs(['ua', 'en']);
-    this.translate.setFallbackLang('en');
-    this.translate.use('en');
+    this.translate.setFallbackLang('ua');
+    this.translate.use('ua');
   }
 }
