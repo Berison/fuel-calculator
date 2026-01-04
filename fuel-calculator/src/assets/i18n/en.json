@@ -98,5 +98,13 @@
       }
     }
   },
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "charts": {
+    "fuel": {
+      "consumption": "Consumption (L/100km)",
+      "refuelCost": "Refuel (UAH)",
+      "lPer100": "L/100km",
+      "uah": "UAH"
+    }
+  }
 }

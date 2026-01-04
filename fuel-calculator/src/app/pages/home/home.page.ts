@@ -6,6 +6,7 @@ import { ToCarsButtonComponent } from './components/to-cars-button/to-cars-butto
 import { CarsService } from 'src/app/core/services/database/cars.service';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ChartComponent } from './components/chart/chart.component';
 @Component({
   selector: 'fc-home',
   templateUrl: 'home.page.html',
@@ -14,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     TranslatePipe,
     HelloUserComponent,
     ToCarsButtonComponent,
+    ChartComponent,
   ],
 })
 export class HomePage {

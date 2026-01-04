@@ -27,6 +27,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { ThemeService } from './app/core/services/ui/theme.service';
 import { inject, provideAppInitializer } from '@angular/core';
 
+import { provideEchartsCore } from 'ngx-echarts';
+import * as echarts from 'echarts';
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -47,5 +50,6 @@ bootstrapApplication(AppComponent, {
     provideAppInitializer(() => {
       inject(ThemeService).init();
     }),
+    provideEchartsCore({ echarts }),
   ],
 });
