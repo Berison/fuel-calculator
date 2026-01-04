@@ -7,7 +7,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { homeOutline, settingsOutline } from 'ionicons/icons';
+import { carOutline, homeOutline, settingsOutline } from 'ionicons/icons';
 
 const MODULES = [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel];
 
@@ -17,6 +17,6 @@ const MODULES = [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel];
 })
 export class IonTabsModule {
   constructor() {
-    addIcons({ homeOutline, settingsOutline });
+    addIcons({ homeOutline, settingsOutline, carOutline });
   }
 }

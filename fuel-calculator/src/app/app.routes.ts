@@ -29,6 +29,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/settings/settings.routes').then((m) => m.routes),
       },
+      {
+        path: 'my-cars',
+        loadChildren: () =>
+          import('./pages/my-cars/my-cars.routes').then((m) => m.routes),
+      },
     ],
   },
 

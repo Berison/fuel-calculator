@@ -10,7 +10,7 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { carOutline } from 'ionicons/icons';
+import { addCircle, car } from 'ionicons/icons';
 
 const MODULES = [
   IonItem,
@@ -29,6 +29,6 @@ const MODULES = [
 })
 export class IonCarsComponentModule {
   constructor() {
-    addIcons({ carOutline });
+    addIcons({ car, addCircle });
   }
 }

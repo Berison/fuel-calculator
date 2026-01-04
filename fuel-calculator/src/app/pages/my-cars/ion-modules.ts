@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import {
+  IonBackButton,
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonText,
+  IonButtons,
 } from '@ionic/angular/standalone';
 
 const MODULES = [
@@ -15,14 +13,12 @@ const MODULES = [
   IonToolbar,
   IonHeader,
   IonTitle,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonText,
+  IonBackButton,
+  IonButtons,
 ];
 
 @NgModule({
   imports: MODULES,
   exports: MODULES,
 })
-export class IonHomePageModule {}
+export class IonMyCarsPageModule {}

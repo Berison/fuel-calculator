@@ -19,8 +19,9 @@ import { RouterLink } from '@angular/router';
       @for (c of cars(); track c.id) {
       <ion-item-sliding>
         <ion-item [routerLink]="c.id">
+          <ion-icon aria-hidden="true" slot="start" size="large" name="car" />
           <ion-label>
-            <h2>{{ c.name }} <ion-icon name="car-outline" /></h2>
+            <h2>{{ c.name }}</h2>
             <p>
               {{ c.year }} - {{ c.color }} - {{ c.engineSize }}
               {{ engineVolume() }}
@@ -34,7 +35,10 @@ import { RouterLink } from '@angular/router';
         </ion-item-options>
       </ion-item-sliding>
       } @empty {
-      <ion-item>{{ 'pages.home.cars.no-cars' | translate }}</ion-item>
+      <ion-item
+        >{{ 'pages.home.cars.no-cars' | translate }}
+        <ion-icon class="ion-margin-start" name="add-circle" color="primary"
+      /></ion-item>
       }
     </ion-list>
     }

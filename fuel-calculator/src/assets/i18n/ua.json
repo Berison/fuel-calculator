@@ -18,8 +18,11 @@
   "pages": {
     "home": {
       "header-title": "Домашня сторінка",
+      "hello-user": "Привіт, {{name}} !",
+      "to-cars-button": "До машин",
+      "how-many-cars": "Cкільки машин ви маєте",
       "cars": {
-        "no-cars": "Автомобілів ще немає",
+        "no-cars": "Автомобілів ще немає, натисніть",
         "new-car": "Нова машина",
         "form": {
           "car-name": {
@@ -66,6 +69,9 @@
         "title": "Користувач",
         "account-created": "Акаунт створено:"
       }
+    },
+    "my-cars": {
+      "header-title": "Мої машини"
     }
   },
   "tabs": {
@@ -74,6 +80,9 @@
     },
     "settings": {
       "title": "Налаштування"
+    },
+    "my-cars": {
+      "title": "Мої машини"
     }
   },
   "toast": {
