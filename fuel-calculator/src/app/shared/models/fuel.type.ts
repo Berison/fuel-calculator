@@ -5,3 +5,5 @@ export type FuelEntry = {
   km: number;
   fullTank: boolean;
 };
+
+export type NewFuelEntry = Omit<FuelEntry, 'date'>;

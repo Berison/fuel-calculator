@@ -1,16 +1,12 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ModalController } from '@ionic/angular/standalone';
 import { IonAddRefuelingModule } from '../ion-modules';
-import { TranslatePipe } from '@ngx-translate/core';
-import { FuelEntry } from 'src/app/shared/models/fuel.type';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { NewFuelEntry } from 'src/app/shared/models/fuel.type';
+import { ToastService } from 'src/app/core/services/ui/toast.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'fc-add-refueling-modal',
@@ -20,12 +16,21 @@ import { FuelEntry } from 'src/app/shared/models/fuel.type';
 export class AddRefuelingModalComponent {
   private modalCtrl = inject(ModalController);
   private formBuilder = inject(FormBuilder);
+  private toast = inject(ToastService);
+  private translateService = inject(TranslateService);
+
+  private readonly formErrorToast = toSignal(
+    this.translateService.stream('pages.home.pages.car.refueling.form.error')
+  );
 
   readonly fuelForm = this.formBuilder.group({
-    liters: ['', Validators.required],
-    uah: ['', Validators.required],
-    km: ['', Validators.required],
-    fullTank: [false],
+    liters: this.formBuilder.control<number | null>(null, Validators.required),
+    priceUAH: this.formBuilder.control<number | null>(
+      null,
+      Validators.required
+    ),
+    km: this.formBuilder.control<number | null>(null, Validators.required),
+    fullTank: this.formBuilder.control(false, { nonNullable: true }),
   });
 
   get litersIsNotValid() {
@@ -37,8 +42,8 @@ export class AddRefuelingModalComponent {
 
   get uahIsNotValid() {
     return (
-      this.fuelForm.get('uah')?.touched &&
-      this.fuelForm.get('uah')?.hasError('required')
+      this.fuelForm.get('priceUAH')?.touched &&
+      this.fuelForm.get('priceUAH')?.hasError('required')
     );
   }
 
@@ -49,13 +54,29 @@ export class AddRefuelingModalComponent {
     );
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (!this.fuelForm.valid) {
+      this.toast.error(this.formErrorToast());
+      return;
+    }
+
+    const v = this.fuelForm.getRawValue();
+
+    const data: NewFuelEntry = {
+      liters: v.liters!,
+      priceUAH: v.priceUAH!,
+      km: v.km!,
+      fullTank: v.fullTank,
+    };
+
+    this.confirm(data);
+  }
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  confirm(data: FuelEntry) {
+  confirm(data: NewFuelEntry) {
     return this.modalCtrl.dismiss(data, 'confirm');
   }
 }

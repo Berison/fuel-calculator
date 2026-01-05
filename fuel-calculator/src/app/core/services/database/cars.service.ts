@@ -15,6 +15,7 @@ import { from, map, Observable, take, tap } from 'rxjs';
 import { Car, NewCar } from 'src/app/shared/models/car.interface';
 import { ToastService } from '../ui/toast.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NewFuelEntry } from 'src/app/shared/models/fuel.type';
 
 @Injectable({ providedIn: 'root' })
 export class CarsService {
@@ -78,6 +79,23 @@ export class CarsService {
       color: car.color,
       engineSize: car.engineSize,
       createdAt: serverTimestamp(),
+    });
+  }
+
+  /** Add refuel data to the current user and car */
+  addRefuelToCar(refuelData: NewFuelEntry, carId: string) {
+    const uid = this.getUid();
+    const carRef = collection(
+      this.firestore,
+      `users/${uid}/cars/${carId}/fuel`
+    );
+
+    return addDoc(carRef, {
+      date: serverTimestamp(),
+      liters: refuelData.liters,
+      priceUAH: refuelData.priceUAH,
+      km: refuelData.km,
+      fullTank: refuelData.fullTank,
     });
   }
 

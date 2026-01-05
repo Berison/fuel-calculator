@@ -79,7 +79,8 @@
               },
               "full-tank": {
                 "label": "Full tank"
-              }
+              },
+              "error": "Not all fields are filled in correctly"
             }
           }
         }
@@ -114,12 +115,14 @@
       "signin": {
         "login-failed": "Login failed, check your credentials"
       },
-      "car-not-found": "Car not found"
+      "car-not-found": "Car not found",
+      "added-refuel-note": "Something went wrong, please try again later"
     },
     "success": {
       "signin": {
         "login-success": "Logged in successfully"
-      }
+      },
+      "added-refuel-note": "Added successfully"
     }
   },
   "loading": "Loading...",
