@@ -4,11 +4,17 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Car } from 'src/app/shared/models/car.interface';
 import { CarInfoComponent } from './components/car-info/car-info.component';
+import { AddRefuelingComponent } from './components/add-refueling/add-refueling.component';
 
 @Component({
   selector: 'fc-car-page',
   templateUrl: 'car.page.html',
-  imports: [IonCarPageModule, TranslatePipe, CarInfoComponent],
+  imports: [
+    IonCarPageModule,
+    TranslatePipe,
+    CarInfoComponent,
+    AddRefuelingComponent,
+  ],
 })
 export class CarPage {
   private route = inject(ActivatedRoute);

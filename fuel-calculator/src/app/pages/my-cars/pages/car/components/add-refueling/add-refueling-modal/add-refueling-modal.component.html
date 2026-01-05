@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">{{
+        "pages.home.cars.actions.cancel" | translate
+      }}</ion-button>
+    </ion-buttons>
+    <ion-title>{{
+      "pages.home.pages.car.refueling.title" | translate
+    }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input
+        [label]="'pages.home.pages.car.refueling.form.liters.label' | translate"
+        labelPlacement="stacked"
+        type="number"
+        inputmode="decimal"
+        [placeholder]="
+          'pages.home.pages.car.refueling.form.liters.placeholder' | translate
+        "
+        formControlName="liters"
+      ></ion-input>
+    </ion-item>
+    @if(litersIsNotValid) {
+    <ion-note color="danger" class="ion-padding-start">
+      {{ "pages.home.pages.car.refueling.form.liters.error" | translate }}
+    </ion-note>
+    }
+
+    <ion-item>
+      <ion-input
+        [label]="'pages.home.pages.car.refueling.form.cost.label' | translate"
+        labelPlacement="stacked"
+        type="number"
+        inputmode="decimal"
+        [placeholder]="
+          'pages.home.pages.car.refueling.form.cost.placeholder' | translate
+        "
+        formControlName="uah"
+      ></ion-input>
+    </ion-item>
+    @if(uahIsNotValid) {
+    <ion-note color="danger" class="ion-padding-start">
+      {{ "pages.home.pages.car.refueling.form.cost.error" | translate }}
+    </ion-note>
+    }
+
+    <ion-item>
+      <ion-input
+        [label]="'pages.home.pages.car.refueling.form.km.label' | translate"
+        labelPlacement="stacked"
+        type="number"
+        inputmode="decimal"
+        [placeholder]="
+          'pages.home.pages.car.refueling.form.km.placeholder' | translate
+        "
+        formControlName="km"
+      ></ion-input>
+    </ion-item>
+    @if(uahIsNotValid) {
+    <ion-note color="danger" class="ion-padding-start">
+      {{ "pages.home.pages.car.refueling.form.km.error" | translate }}
+    </ion-note>
+    }
+
+    <ion-item lines="none">
+      <ion-checkbox formControlName="fullTank" justify="space-between">
+        {{ "pages.home.pages.car.refueling.form.full-tank.label" | translate }}
+      </ion-checkbox>
+    </ion-item>
+
+    <ion-button
+      class="ion-margin-top"
+      expand="block"
+      type="submit"
+      [disabled]="fuelForm.invalid"
+    >
+      {{ "pages.home.pages.car.refueling.button" | translate }}
+    </ion-button>
+  </form>
+</ion-content>

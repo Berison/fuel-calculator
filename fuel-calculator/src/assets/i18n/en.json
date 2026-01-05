@@ -57,6 +57,30 @@
             "createdAt": "When the car was added",
             "engineSize": "Engine volume",
             "year": "Year"
+          },
+          "refueling": {
+            "button": "Add Refueling",
+            "title": "Last refuel",
+            "form": {
+              "liters": {
+                "label": "Liters",
+                "placeholder": "e.g. 35",
+                "error": "Liters is required"
+              },
+              "cost": {
+                "label": "Cost (UAH)",
+                "placeholder": "e.g. 1500",
+                "error": "Cost is required"
+              },
+              "km": {
+                "label": "KM",
+                "placeholder": "e.g. 14321",
+                "error": "KM is required"
+              },
+              "full-tank": {
+                "label": "Full tank"
+              }
+            }
           }
         }
       }
