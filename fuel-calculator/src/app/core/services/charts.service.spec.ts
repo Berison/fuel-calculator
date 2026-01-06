@@ -42,7 +42,7 @@ describe('ChartsService', () => {
 
   it('should correctly roll over year end (Dec -> Jan)', () => {
     jasmine.clock().install();
-    jasmine.clock().mockDate(new Date(2025, 11, 31, 23, 59, 59)); // 31 Dec 2025, maybe...
+    jasmine.clock().mockDate(new Date(2025, 11, 31, 23, 59, 59)); // 31 Dec 2025,
 
     const { start, end } = (service as any).getMonthRange();
 
