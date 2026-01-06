@@ -10,12 +10,14 @@ import {
   deleteDoc,
   docData,
   getDoc,
+  query,
+  orderBy,
 } from '@angular/fire/firestore';
 import { from, map, Observable, take, tap } from 'rxjs';
 import { Car, NewCar } from 'src/app/shared/models/car.interface';
 import { ToastService } from '../ui/toast.service';
 import { TranslateService } from '@ngx-translate/core';
-import { NewFuelEntry } from 'src/app/shared/models/fuel.type';
+import { FuelEntry, NewFuelEntry } from 'src/app/shared/models/fuel.type';
 
 @Injectable({ providedIn: 'root' })
 export class CarsService {
@@ -97,6 +99,19 @@ export class CarsService {
       km: refuelData.km,
       fullTank: refuelData.fullTank,
     });
+  }
+
+  /** List of fuel notes for the current user and car */
+  getFuelNotes$(carId: string) {
+    const uid = this.getUid();
+
+    const notesRef = collection(
+      this.firestore,
+      `users/${uid}/cars/${carId}/fuel`
+    );
+    const q = query(notesRef, orderBy('date', 'desc'));
+
+    return collectionData(q, { idField: 'id' }) as Observable<FuelEntry[]>;
   }
 
   /** Delete the car to the current user */

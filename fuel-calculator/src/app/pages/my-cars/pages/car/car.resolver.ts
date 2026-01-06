@@ -6,6 +6,7 @@ import { Car } from 'src/app/shared/models/car.interface';
 import { defer, EMPTY, firstValueFrom } from 'rxjs';
 import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { FuelEntry } from 'src/app/shared/models/fuel.type';
 
 export const carResolver: ResolveFn<Car> = (route) => {
   const carsService = inject(CarsService);

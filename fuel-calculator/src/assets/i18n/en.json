@@ -61,6 +61,7 @@
           "refueling": {
             "button": "Add Refueling",
             "title": "Last refuel",
+            "fuel-notes": "Fuel notes",
             "form": {
               "liters": {
                 "label": "Liters",

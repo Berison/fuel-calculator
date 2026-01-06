@@ -10,15 +10,23 @@
 ## Database
 
 Subcollections method
-users → {uid} → cars → {carId}
+users -> {uid} -> cars -> {carId} -> fuel -> {fuelId}
 Updated rules for Firebase:
+match /databases/{database}/documents {
 match /users/{userId} {
 
-allow read, write: if request.auth != null
-&& request.auth.uid == userId;
+      allow read, write: if request.auth != null
+                         && request.auth.uid == userId;
 
-match /cars/{carId} {
-allow read, write: if request.auth != null
-&& request.auth.uid == userId;
-}
+      match /cars/{carId} {
+        allow read, write: if request.auth != null
+                           && request.auth.uid == userId;
+
+        match /fuel/{fuelId} {
+          allow read, write: if request.auth != null
+                             && request.auth.uid == userId;
+        }
+      }
+    }
+
 }

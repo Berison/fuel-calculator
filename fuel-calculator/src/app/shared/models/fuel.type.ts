@@ -1,9 +1,12 @@
+import { Timestamp } from 'firebase/firestore';
+
 export type FuelEntry = {
-  date: string;
+  date: Timestamp;
   liters: number;
   priceUAH: number;
   km: number;
   fullTank: boolean;
+  id: string;
 };
 
-export type NewFuelEntry = Omit<FuelEntry, 'date'>;
+export type NewFuelEntry = Omit<FuelEntry, 'date' | 'id'>;

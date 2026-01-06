@@ -1,0 +1,36 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{
+      "pages.home.pages.car.refueling.fuel-notes" | translate
+    }}</ion-card-title>
+    <ion-card-subtitle
+      >{{
+        "pages.home.pages.car.refueling.title" | translate
+      }}:</ion-card-subtitle
+    >
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      @for(fuelNote of fuelNotes(); track fuelNote.id) {
+      <ion-item>
+        <ion-icon name="egg" slot="start"></ion-icon>
+        <ion-label>
+          <ion-text>{{
+            fuelNote.date.seconds * 1000 | date : "short"
+          }}</ion-text>
+          <br />
+          <ion-note class="ion-text-wrap"
+            >{{ "pages.home.pages.car.refueling.form.km.label" | translate }}:
+            {{ fuelNote.km }},
+            {{
+              "pages.home.pages.car.refueling.form.liters.label" | translate
+            }}: {{ fuelNote.liters }},
+            {{ "pages.home.pages.car.refueling.form.cost.label" | translate }}:
+            {{ fuelNote.priceUAH }}</ion-note
+          ></ion-label
+        >
+      </ion-item>
+      }
+    </ion-list>
+  </ion-card-content>
+</ion-card>

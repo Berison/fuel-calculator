@@ -19,7 +19,9 @@ export class ThemeService {
   }
 
   toggleChange(event: CustomEvent) {
-    this.toggleDarkPalette(event.detail.checked);
+    const isDark = !!event.detail.checked;
+    this.paletteToggle.set(isDark);
+    this.toggleDarkPalette(isDark);
   }
 
   toggleDarkPalette(shouldAdd: boolean) {

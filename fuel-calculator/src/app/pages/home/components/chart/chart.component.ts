@@ -1,153 +1,100 @@
-import { Component, computed, effect, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, computed, inject } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { map } from 'rxjs';
-import { FuelEntry } from 'src/app/shared/models/fuel.type';
-import { buildConsumptionSeries } from 'src/app/shared/utils';
-
-const MOCK: FuelEntry[] = [
-  {
-    date: '2025-12-05',
-    liters: 36,
-    priceUAH: 2050,
-    km: 121350,
-    fullTank: true,
-  },
-  {
-    date: '2025-12-15',
-    liters: 28,
-    priceUAH: 1640,
-    km: 121780,
-    fullTank: false,
-  },
-  {
-    date: '2025-12-23',
-    liters: 34,
-    priceUAH: 1990,
-    km: 122180,
-    fullTank: true,
-  },
-  {
-    date: '2026-01-02',
-    liters: 41,
-    priceUAH: 2460,
-    km: 122680,
-    fullTank: true,
-  },
-  {
-    date: '2026-01-12',
-    liters: 29,
-    priceUAH: 1765,
-    km: 123090,
-    fullTank: false,
-  },
-  {
-    date: '2026-01-22',
-    liters: 38,
-    priceUAH: 2330,
-    km: 123540,
-    fullTank: true,
-  },
-];
-
-const consumption = buildConsumptionSeries(MOCK);
-
-const xDates = MOCK.slice()
-  .sort((a, b) => a.date.localeCompare(b.date))
-  .map((e) => e.date);
+import { of, switchMap } from 'rxjs';
+import {
+  CarMonthSummary,
+  ChartsService,
+} from 'src/app/core/services/charts.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ThemeService } from 'src/app/core/services/ui/theme.service';
 
 @Component({
   selector: 'fc-chart',
-  template: ` <div echarts [options]="options()" class="chart"></div> `,
+  standalone: true,
   imports: [NgxEchartsModule],
+  template: `<div echarts [options]="options()" class="chart"></div>`,
+  styles: [
+    `
+      .chart {
+        height: 320px;
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class ChartComponent {
-  private readonly translateService = inject(TranslateService);
+  private readonly charts = inject(ChartsService);
+  private readonly auth = inject(AuthService);
+  private readonly theme = inject(ThemeService);
 
-  private chartText = toSignal(
-    this.translateService
-      .stream([
-        'charts.fuel.consumption',
-        'charts.fuel.refuelCost',
-        'charts.fuel.lPer100',
-        'charts.fuel.uah',
-      ])
-      .pipe(
-        map((res) => ({
-          consumption: res['charts.fuel.consumption'],
-          refuelCost: res['charts.fuel.refuelCost'],
-          lPer100: res['charts.fuel.lPer100'],
-          uah: res['charts.fuel.uah'],
-        }))
-      ),
-    { initialValue: { consumption: '', refuelCost: '', lPer100: '', uah: '' } }
+  private readonly uid = computed(() => this.auth.user()?.uid);
+
+  private readonly summary = toSignal(
+    toObservable(this.uid).pipe(
+      switchMap((uid) =>
+        uid
+          ? this.charts.getThisMonthSummary$(uid)
+          : of([] as CarMonthSummary[])
+      )
+    ),
+    { initialValue: [] as CarMonthSummary[] }
   );
 
-  options = computed<EChartsOption>(() => {
-    const t = this.chartText();
+  readonly options = computed<EChartsOption>(() => {
+    const isDark = this.theme.paletteToggle();
+
+    const textColor = isDark ? '#E5E7EB' : '#111827';
+    const axisLineColor = isDark ? '#6B7280' : '#9CA3AF';
+    const gridLineColor = isDark
+      ? 'rgba(255,255,255,0.08)'
+      : 'rgba(0,0,0,0.08)';
+    const bgColor = isDark ? 'transparent' : 'transparent';
+
+    const rows = this.summary();
+    const names = rows.map((x) => x.name);
+    const money = rows.map((x) => Math.round(x.moneyUAH));
+    const liters = rows.map((x) => Number(x.liters.toFixed(1)));
 
     return {
-      grid: { left: 48, right: 54, top: 24, bottom: 48 },
+      backgroundColor: bgColor,
+      color: isDark
+        ? ['#60A5FA', '#34D399'] // dark series colors
+        : ['#2563EB', '#059669'], // light series colors
 
       tooltip: {
         trigger: 'axis',
-        axisPointer: { type: 'cross' },
+        textStyle: { color: textColor },
+        backgroundColor: isDark ? '#111827' : '#FFFFFF',
+        borderColor: isDark ? '#374151' : '#E5E7EB',
       },
 
-      legend: { top: 0, data: [t.consumption, t.refuelCost] },
+      legend: {
+        top: 0,
+        textStyle: { color: textColor },
+      },
+
+      grid: { left: 48, right: 16, top: 32, bottom: 48 },
 
       xAxis: {
         type: 'category',
-        data: xDates,
-        axisLabel: { formatter: (v: string) => v.slice(5) },
+        data: names,
+        axisLabel: { color: textColor },
+        axisLine: { lineStyle: { color: axisLineColor } },
+        axisTick: { lineStyle: { color: axisLineColor } },
       },
 
-      yAxis: [
-        {
-          type: 'value',
-          name: t.lPer100,
-          min: (val: any) => Math.max(0, Math.floor(val.min - 1)),
-          max: (val: any) => Math.ceil(val.max + 1),
-        },
-        {
-          type: 'value',
-          name: t.uah,
-          min: 0,
-        },
-      ],
-
-      dataZoom: [
-        { type: 'inside', start: 0, end: 100 },
-        { type: 'slider', height: 22, bottom: 16, start: 0, end: 100 },
-      ],
+      yAxis: {
+        type: 'value',
+        axisLabel: { color: textColor },
+        axisLine: { lineStyle: { color: axisLineColor } },
+        splitLine: { lineStyle: { color: gridLineColor } },
+      },
 
       series: [
-        {
-          name: t.refuelCost,
-          type: 'bar',
-          yAxisIndex: 1,
-          data: MOCK.slice()
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((e) => e.priceUAH),
-          tooltip: { valueFormatter: (v: any) => `${v} ${t.uah}` },
-        },
-        {
-          name: t.consumption,
-          type: 'line',
-          smooth: true,
-          showSymbol: true,
-          symbolSize: 8,
-          data: xDates.map((d) => {
-            const p = consumption.find((c) => c.date === d);
-            return p ? p.lPer100 : null;
-          }),
-          connectNulls: false,
-          tooltip: {
-            valueFormatter: (v: any) => (v == null ? '-' : `${v} ${t.lPer100}`),
-          },
-        },
+        { name: 'UAH', type: 'bar', data: money },
+        { name: 'Liters', type: 'bar', data: liters },
       ],
     };
   });
